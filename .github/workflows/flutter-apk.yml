@@ -1,4 +1,4 @@
-name: Build APK (Flutter)
+name: Build Flutter APK
 
 on:
   workflow_dispatch:
@@ -8,22 +8,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: 📥 Repo indiriliyor
+      - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: 🔧 Flutter kuruluyor
+      - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.22.0'
+          channel: stable
 
-      - name: 📦 Paketler yükleniyor
+      - name: Flutter pub get
         run: flutter pub get
 
-      - name: 🔨 Release APK oluştur
+      - name: Build APK
         run: flutter build apk --release
 
-      - name: 📤 APK yükleniyor
+      - name: Upload APK
         uses: actions/upload-artifact@v3
         with:
-          name: babilpro-release-apk
+          name: app-release
           path: build/app/outputs/flutter-apk/app-release.apk
